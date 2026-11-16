@@ -1,0 +1,580 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SURGICARE - Edukasi Pasien Bedah</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f3f6fa;
+  color: #243247;
+  line-height: 1.6;
+}
+
+header {
+  background: #174b75;
+  color: white;
+  padding: 28px 20px;
+  text-align: center;
+}
+
+header h1 {
+  font-size: 30px;
+  letter-spacing: 2px;
+}
+
+header p {
+  font-size: 13px;
+  margin-top: 5px;
+  opacity: .9;
+}
+
+.container {
+  max-width: 750px;
+  margin: auto;
+  padding: 22px 16px;
+}
+
+.welcome {
+  text-align: center;
+  margin: 15px 0 25px;
+}
+
+.welcome h2 {
+  font-size: 22px;
+  margin-bottom: 8px;
+}
+
+.welcome p {
+  color: #65758b;
+  font-size: 14px;
+}
+
+.categories {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.category {
+  border: none;
+  border-radius: 15px;
+  padding: 22px 12px;
+  text-align: left;
+  cursor: pointer;
+  min-height: 165px;
+  transition: .2s;
+}
+
+.category:hover {
+  transform: translateY(-3px);
+}
+
+.pre {
+  background: #e2efff;
+  color: #174b75;
+}
+
+.post {
+  background: #e2f3e9;
+  color: #216343;
+}
+
+.category .emoji {
+  font-size: 34px;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.category h3 {
+  font-size: 17px;
+  margin-bottom: 5px;
+}
+
+.category p {
+  font-size: 12px;
+}
+
+.section-title {
+  margin: 15px 0;
+}
+
+.topic {
+  background: white;
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  border: 1px solid #e5eaf0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.topic:hover {
+  border-color: #4c8dc3;
+}
+
+.topic span {
+  color: #678099;
+  font-size: 13px;
+}
+
+.back {
+  background: none;
+  border: none;
+  color: #2874a8;
+  font-size: 14px;
+  cursor: pointer;
+  margin-bottom: 18px;
+}
+
+.content-card {
+  background: white;
+  padding: 22px;
+  border-radius: 15px;
+  margin-top: 12px;
+}
+
+.content-card h2 {
+  color: #174b75;
+  margin-bottom: 12px;
+  font-size: 21px;
+}
+
+.content-card h3 {
+  margin: 18px 0 7px;
+  font-size: 16px;
+}
+
+.content-card p,
+.content-card li {
+  font-size: 14px;
+  color: #526174;
+}
+
+.content-card ul {
+  padding-left: 20px;
+}
+
+.notice {
+  background: #fff5df;
+  padding: 13px;
+  border-radius: 10px;
+  font-size: 13px;
+  margin-top: 18px;
+  color: #75551b;
+}
+
+button.primary {
+  background: #174b75;
+  color: white;
+  border: none;
+  border-radius: 9px;
+  padding: 12px 18px;
+  margin-top: 18px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 14px;
+}
+
+.quiz-option {
+  display: block;
+  background: #f3f6fa;
+  padding: 12px;
+  border-radius: 9px;
+  margin: 9px 0;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.quiz-option input {
+  margin-right: 8px;
+}
+
+#feedback {
+  margin-top: 12px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.hidden {
+  display: none;
+}
+
+footer {
+  text-align: center;
+  color: #8b98a8;
+  padding: 25px 12px;
+  font-size: 11px;
+}
+
+@media(max-width: 420px) {
+  .categories {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>SURGICARE</h1>
+  <p>DIGITAL PATIENT SAFETY EDUCATION</p>
+</header>
+
+<main class="container">
+
+  <section id="home">
+    <div class="welcome">
+      <h2>Selamat Datang!</h2>
+      <p>
+        Mari kenali informasi penting untuk menjaga
+        keselamatan selama menjalani perawatan bedah.
+      </p>
+    </div>
+
+    <div class="categories">
+      <button class="category pre" onclick="showCategory('pre')">
+        <span class="emoji">🏥</span>
+        <h3>PRE-OPERASI</h3>
+        <p>Persiapan sebelum menjalani operasi.</p>
+      </button>
+
+      <button class="category post" onclick="showCategory('post')">
+        <span class="emoji">🩺</span>
+        <h3>POST-OPERASI</h3>
+        <p>Perawatan dan pemulihan setelah operasi.</p>
+      </button>
+    </div>
+  </section>
+
+  <section id="topics" class="hidden">
+    <button class="back" onclick="goHome()">← Kembali</button>
+    <h2 id="categoryTitle" class="section-title"></h2>
+    <div id="topicList"></div>
+  </section>
+
+  <section id="detail" class="hidden">
+    <button class="back" onclick="goTopics()">← Kembali ke materi</button>
+    <div class="content-card">
+      <h2 id="detailTitle"></h2>
+      <div id="detailContent"></div>
+      <button class="primary" onclick="showQuiz()">
+        Mulai Kuis
+      </button>
+    </div>
+  </section>
+
+  <section id="quiz" class="hidden">
+    <button class="back" onclick="goDetail()">← Kembali ke materi</button>
+    <div class="content-card">
+      <h2>Kuis Pemahaman</h2>
+      <p id="question"></p>
+      <div id="options"></div>
+      <button class="primary" onclick="checkAnswer()">
+        Periksa Jawaban
+      </button>
+      <p id="feedback"></p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  SURGICARE © 2026<br>
+  Edukasi keselamatan pasien ruang rawat inap bedah
+</footer>
+
+<script>
+const materials = {
+  pre: [
+    {
+      title: "Persiapan Sebelum Operasi",
+      intro: "Persiapan yang baik membantu pasien menjalani prosedur operasi dengan lebih aman.",
+      points: [
+        "Ikuti instruksi tenaga kesehatan mengenai persiapan operasi.",
+        "Sampaikan riwayat penyakit, alergi, dan obat yang sedang dikonsumsi.",
+        "Lepaskan perhiasan atau benda tertentu sesuai instruksi petugas.",
+        "Pastikan identitas dan jenis tindakan operasi telah dikonfirmasi."
+      ],
+      warning: "Jangan melakukan persiapan sendiri tanpa mengikuti arahan dokter atau perawat.",
+      question: "Apa yang harus dilakukan jika memiliki riwayat alergi obat?",
+      options: [
+        "Tidak perlu memberi tahu siapa pun",
+        "Menyampaikan kepada dokter atau perawat",
+        "Menunggu sampai setelah operasi"
+      ],
+      answer: 1
+    },
+    {
+      title: "Puasa Sebelum Operasi",
+      intro: "Puasa sebelum operasi dilakukan sesuai instruksi tim medis untuk membantu mengurangi risiko aspirasi selama pembiusan.",
+      points: [
+        "Ikuti waktu mulai puasa yang ditentukan oleh dokter atau perawat.",
+        "Tanyakan apakah masih diperbolehkan minum air atau mengonsumsi obat tertentu.",
+        "Jangan makan atau minum di luar instruksi yang diberikan.",
+        "Segera beri tahu perawat jika tidak sengaja makan atau minum."
+      ],
+      warning: "Waktu puasa dapat berbeda pada setiap pasien dan jenis tindakan. Ikuti instruksi tim medis.",
+      question: "Apa yang harus dilakukan jika tidak sengaja makan saat sedang berpuasa?",
+      options: [
+        "Diam saja",
+        "Tetap melanjutkan persiapan tanpa memberi tahu",
+        "Segera memberi tahu perawat"
+      ],
+      answer: 2
+    },
+    {
+      title: "Pencegahan Risiko Jatuh",
+      intro: "Pasien yang sedang menjalani perawatan perlu menjaga keselamatan saat berpindah atau berjalan.",
+      points: [
+        "Gunakan alas kaki yang tidak licin.",
+        "Jangan berjalan sendiri jika merasa pusing atau lemas.",
+        "Minta bantuan perawat saat turun dari tempat tidur.",
+        "Pastikan bel pemanggil berada dalam jangkauan."
+      ],
+      warning: "Jangan memaksakan diri berjalan jika kondisi tubuh belum memungkinkan.",
+      question: "Apa yang sebaiknya dilakukan ketika merasa pusing saat akan turun dari tempat tidur?",
+      options: [
+        "Tetap berjalan sendiri",
+        "Meminta bantuan perawat",
+        "Berdiri dengan cepat"
+      ],
+      answer: 1
+    },
+    {
+      title: "Identifikasi Pasien",
+      intro: "Identifikasi pasien bertujuan memastikan tindakan diberikan kepada orang yang tepat.",
+      points: [
+        "Gunakan gelang identitas selama menjalani perawatan.",
+        "Sebutkan nama lengkap dan tanggal lahir saat diminta petugas.",
+        "Pastikan identitas diperiksa sebelum tindakan atau pemberian obat.",
+        "Jangan melepas gelang identitas tanpa arahan petugas."
+      ],
+      warning: "Segera beri tahu perawat jika gelang identitas rusak atau hilang.",
+      question: "Mengapa identitas pasien harus diperiksa sebelum tindakan?",
+      options: [
+        "Agar tindakan diberikan kepada pasien yang tepat",
+        "Agar pasien cepat pulang",
+        "Agar tidak perlu pemeriksaan lain"
+      ],
+      answer: 0
+    }
+  ],
+
+  post: [
+    {
+      title: "Manajemen Nyeri Setelah Operasi",
+      intro: "Nyeri dapat muncul setelah operasi. Pengelolaan nyeri membantu pasien beristirahat dan melakukan pemulihan.",
+      points: [
+        "Sampaikan kepada perawat jika merasakan nyeri.",
+        "Jelaskan lokasi dan tingkat nyeri yang dirasakan.",
+        "Gunakan obat pereda nyeri sesuai instruksi tenaga kesehatan.",
+        "Lakukan teknik relaksasi atau napas dalam jika dianjurkan."
+      ],
+      warning: "Jangan mengonsumsi obat tambahan tanpa persetujuan tenaga kesehatan.",
+      question: "Apa yang harus dilakukan ketika nyeri setelah operasi semakin berat?",
+      options: [
+        "Menahan nyeri tanpa memberi tahu",
+        "Segera memberi tahu perawat",
+        "Mengonsumsi obat sendiri"
+      ],
+      answer: 1
+    },
+    {
+      title: "Perawatan Luka Operasi",
+      intro: "Luka operasi perlu dijaga agar proses penyembuhan berlangsung dengan baik.",
+      points: [
+        "Jaga area luka sesuai petunjuk perawat.",
+        "Jangan membuka atau mengganti balutan sendiri tanpa instruksi.",
+        "Hindari menyentuh luka dengan tangan yang belum dibersihkan.",
+        "Laporkan jika luka tampak semakin merah, bengkak, bernanah, atau berdarah."
+      ],
+      warning: "Perawatan luka harus mengikuti instruksi dan standar rumah sakit.",
+      question: "Apa yang harus dilakukan jika luka operasi mengeluarkan nanah?",
+      options: [
+        "Segera melapor kepada perawat",
+        "Mengoleskan obat sendiri",
+        "Membiarkannya saja"
+      ],
+      answer: 0
+    },
+    {
+      title: "Mobilisasi Dini",
+      intro: "Mobilisasi merupakan aktivitas bergerak secara bertahap setelah operasi sesuai kondisi pasien.",
+      points: [
+        "Mulai bergerak sesuai arahan dokter atau perawat.",
+        "Lakukan perubahan posisi secara bertahap.",
+        "Minta bantuan saat pertama kali turun dari tempat tidur.",
+        "Hentikan aktivitas dan laporkan jika merasa pusing, sesak, atau sangat lemas."
+      ],
+      warning: "Tidak semua pasien memiliki waktu dan tingkat mobilisasi yang sama.",
+      question: "Bagaimana cara memulai mobilisasi setelah operasi?",
+      options: [
+        "Langsung berjalan sendiri",
+        "Bergerak bertahap sesuai arahan petugas",
+        "Memaksakan diri agar cepat pulih"
+      ],
+      answer: 1
+    },
+    {
+      title: "Pencegahan Infeksi",
+      intro: "Pencegahan infeksi penting untuk mendukung penyembuhan dan menjaga keselamatan pasien.",
+      points: [
+        "Cuci tangan sebelum dan sesudah menyentuh area sekitar luka.",
+        "Jaga kebersihan tubuh dan lingkungan.",
+        "Jangan menyentuh luka dengan tangan yang kotor.",
+        "Laporkan demam atau perubahan pada luka kepada perawat."
+      ],
+      warning: "Jangan menggunakan bahan atau ramuan pada luka tanpa persetujuan tenaga kesehatan.",
+      question: "Kapan sebaiknya pasien membersihkan tangan?",
+      options: [
+        "Hanya setelah makan",
+        "Sebelum dan sesudah menyentuh area sekitar luka",
+        "Tidak perlu jika tangan terlihat bersih"
+      ],
+      answer: 1
+    },
+    {
+      title: "Tanda Bahaya Setelah Operasi",
+      intro: "Pasien dan keluarga perlu mengenali tanda bahaya selama masa pemulihan.",
+      points: [
+        "Perdarahan yang tidak berhenti.",
+        "Sesak napas atau nyeri dada.",
+        "Demam atau kondisi tubuh semakin memburuk.",
+        "Nyeri yang semakin berat atau tidak membaik.",
+        "Luka semakin bengkak, merah, atau mengeluarkan nanah."
+      ],
+      warning: "Segera tekan bel pemanggil atau hubungi perawat jika mengalami tanda bahaya.",
+      question: "Apa yang harus dilakukan jika pasien mengalami sesak napas setelah operasi?",
+      options: [
+        "Menunggu sampai membaik sendiri",
+        "Segera memanggil perawat",
+        "Tidur kembali"
+      ],
+      answer: 1
+    }
+  ]
+};
+
+let currentCategory = "";
+let currentMaterial = null;
+
+function hideAll() {
+  ["home", "topics", "detail", "quiz"].forEach(id => {
+    document.getElementById(id).classList.add("hidden");
+  });
+}
+
+function showCategory(category) {
+  currentCategory = category;
+  hideAll();
+  document.getElementById("topics").classList.remove("hidden");
+
+  document.getElementById("categoryTitle").textContent =
+    category === "pre" ? "Materi PRE-OPERASI" : "Materi POST-OPERASI";
+
+  const list = document.getElementById("topicList");
+  list.innerHTML = "";
+
+  materials[category].forEach((item, index) => {
+    const div = document.createElement("div");
+    div.className = "topic";
+    div.innerHTML = `<strong>${item.title}</strong><span>›</span>`;
+    div.onclick = () => showDetail(index);
+    list.appendChild(div);
+  });
+}
+
+function showDetail(index) {
+  currentMaterial = materials[currentCategory][index];
+  hideAll();
+  document.getElementById("detail").classList.remove("hidden");
+
+  document.getElementById("detailTitle").textContent =
+    currentMaterial.title;
+
+  const content = document.getElementById("detailContent");
+  content.innerHTML = `
+    <p>${currentMaterial.intro}</p>
+    <h3>Hal yang perlu diketahui:</h3>
+    <ul>
+      ${currentMaterial.points.map(p => `<li>${p}</li>`).join("")}
+    </ul>
+    <div class="notice">
+      <strong>Perhatian:</strong> ${currentMaterial.warning}
+    </div>
+  `;
+}
+
+function showQuiz() {
+  hideAll();
+  document.getElementById("quiz").classList.remove("hidden");
+
+  document.getElementById("question").textContent =
+    currentMaterial.question;
+
+  const options = document.getElementById("options");
+  options.innerHTML = "";
+
+  currentMaterial.options.forEach((option, index) => {
+    options.innerHTML += `
+      <label class="quiz-option">
+        <input type="radio" name="answer" value="${index}">
+        ${option}
+      </label>
+    `;
+  });
+
+  document.getElementById("feedback").textContent = "";
+}
+
+function checkAnswer() {
+  const selected = document.querySelector('input[name="answer"]:checked');
+  const feedback = document.getElementById("feedback");
+
+  if (!selected) {
+    feedback.textContent = "Silakan pilih salah satu jawaban.";
+    feedback.style.color = "#b7791f";
+    return;
+  }
+
+  if (Number(selected.value) === currentMaterial.answer) {
+    feedback.textContent = "Benar! Jawaban kamu tepat.";
+    feedback.style.color = "green";
+  } else {
+    feedback.textContent = "Belum tepat. Silakan baca kembali materinya.";
+    feedback.style.color = "red";
+  }
+}
+
+function goHome() {
+  hideAll();
+  document.getElementById("home").classList.remove("hidden");
+}
+
+function goTopics() {
+  hideAll();
+  document.getElementById("topics").classList.remove("hidden");
+}
+
+function goDetail() {
+  hideAll();
+  document.getElementById("detail").classList.remove("hidden");
+}
+
+</script>
+</body>
+</html>
